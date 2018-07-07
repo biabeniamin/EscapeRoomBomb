@@ -1,3 +1,5 @@
+#pragma once
+
 #define DWORD unsigned long
 #define WORD int
 

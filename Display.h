@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Types.h"
 #include "LedControl.h"
 #include "Time.h"

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Types.h"
 #include <Arduino.h>
 
@@ -11,6 +13,8 @@ public:
 	BYTE GetMinutes();
 	BYTE GetSeconds();
 	BYTE GetMiliSeconds();
+
+	void AddMiliSeconds(DWORD);
 
 private:
 	DWORD _miliSeconds;

@@ -1,5 +1,6 @@
 #include "Display.h"
 
+
 Display::Display(WORD DataIn, WORD Clk, WORD Cs)
 {
 	_pLedControl = new LedControl(DataIn,
@@ -78,6 +79,8 @@ void Display::Write(Time *time)
 	number *= 100;
 
 	number += time->GetMiliSeconds();
+
+	Serial.println(number);
 
 	WriteInDecimal(number);
 }

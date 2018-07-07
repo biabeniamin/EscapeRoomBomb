@@ -30,3 +30,8 @@ BYTE Time::GetMiliSeconds()
 {
 	return (_miliSeconds) % 100;
 }
+
+void Time::AddMiliSeconds(DWORD MiliSeconds)
+{
+	_miliSeconds += MiliSeconds;
+}
