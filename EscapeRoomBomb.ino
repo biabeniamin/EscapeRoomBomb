@@ -3,11 +3,13 @@
 Display display(12, 11, 10);
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(9600);
 
 }
 
 void loop() {
-  display.Write(0xFEDCBA987);
+  Time *t = new Time(3900);
+  display.Write(t);
+  //display.WriteInDecimal(1234567);
 
 }

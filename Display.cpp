@@ -35,6 +35,53 @@ void Display::Write(DWORD Number)
 	}
 }
 
+void Display::WriteInDecimal(DWORD Number)
+{
+	DWORD number;
+	BYTE displayed[8] = { 0 };
+	BYTE charCount;
+
+	number = Number;
+	charCount = 0;
+
+	while (0 < number)
+	{
+		displayed[charCount] += number % 10;
+		charCount++;
+
+		number /= 10;
+	}
+
+	for (BYTE i = 0; i < NUMBER_OF_CHARACTERS; i++)
+	{
+		_pLedControl->setDigit(DISPLAY_ADDRESS,
+			i,
+			displayed[i],
+			false
+		);
+	}
+}
+
+void Display::Write(Time *time)
+{
+	DWORD number;
+
+	number = 0;
+
+	number = time->GetHours();
+	number *= 100;
+
+	number += time->GetMinutes();
+	number *= 100;
+
+	number += time->GetSeconds();
+	number *= 100;
+
+	number += time->GetMiliSeconds();
+
+	WriteInDecimal(number);
+}
+
 void Display::Flush()
 {
 
