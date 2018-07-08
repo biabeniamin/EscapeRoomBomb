@@ -1,6 +1,9 @@
 #include "Arduino.h"
 #include "Time.h"
 
+#define TIMER_INHERITANCE
+
+
 class Timer
 {
 public:
@@ -18,12 +21,17 @@ public:
 
 	DWORD Timer::GetTotalTimerTicks();
 	Time* GetUpTime();
-private:
+
+protected:
 	Timer();
+	DWORD _timerTicks;
+	Time *_pUpTime;
+
+private:
 	static Timer *_instance;
 
-	Time *_pUpTime;
-	DWORD _timerTicks;
+	
+	
 
 
 };

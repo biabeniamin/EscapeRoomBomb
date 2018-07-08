@@ -63,7 +63,7 @@ void Display::WriteInDecimal(DWORD Number)
 	}
 }
 
-void Display::Write(Time *time)
+void Display::Write(ITime *time)
 {
 	DWORD number;
 
@@ -80,7 +80,6 @@ void Display::Write(Time *time)
 
 	number += time->GetMiliSeconds();
 
-	Serial.println(number);
 
 	WriteInDecimal(number);
 }

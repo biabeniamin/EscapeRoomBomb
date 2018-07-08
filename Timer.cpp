@@ -100,8 +100,11 @@ Time* Timer::GetUpTime()
 	return _pUpTime;
 }
 
+#ifndef TIMER_INHERITANCE
+
 ISR(TIMER0_COMPA_vect) { //timer0 interrupt 2kHz toggles pin 8
 						 //generates pulse wave of frequency 2kHz/2 = 1kHz (takes two cycles for full wave- toggle high then toggle low)
 	Timer::GetInstance()->TimerEvent();
-	digitalWrite(8, !digitalRead(8));
 }
+
+#endif // !TIMER_INHERITANCE

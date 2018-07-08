@@ -1,22 +1,28 @@
 #include "Display.h"
-#include "Timer.h"
+#include "BombTimer.h"
+#include "Keyboard.h"
+#include "BombTime.h"
+
+char rows[] = {7, 2, 3, 5};
+char cols[] = {6, 8, 4};
+
+Keyboard keyboard(rows,
+cols);
 
 Display display(12, 11, 10);
-Time *t = new Time(100);
-Timer *timer;
+BombTimer *bombTimer;
 
 void setup() {
   Serial.begin(9600);
-  timer = Timer::GetInstance();
-  timer->SetTimer();
-  timer->TurnOn();
-  
-  pinMode(8, OUTPUT);
+  bombTimer = BombTimer::GetInstance();
+  bombTimer->SetTimer();
+  bombTimer->TurnOn();
+
+  keyboard.Start();
 }
 
 void loop() {
-  t->AddMiliSeconds(-1);
-  display.Write(timer->GetUpTime());
+  display.Write(bombTimer->GetBombTime());
   //display.WriteInDecimal(1234567);
 
 }

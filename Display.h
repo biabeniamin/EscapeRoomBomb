@@ -14,7 +14,7 @@ public:
 
 	void Write(DWORD);
 	void WriteInDecimal(DWORD);
-	void Write(Time*);
+	void Write(ITime*);
 	void Flush();
 
 private:
