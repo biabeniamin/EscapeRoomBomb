@@ -10,7 +10,8 @@ class Keyboard
 {
 public:
 	Keyboard(BYTE*,
-		BYTE*);
+		BYTE*,
+		void(*Event)(BYTE));
 
 	static Keyboard* GetInstance();
 
@@ -24,6 +25,8 @@ private:
 	BYTE _pRows[4];
 	BYTE _pCols[4];
 	BYTE _lastKeyPressed;
+
+	void(*_pKeyPressedEvent)(BYTE);
 
 	BYTE GetKey(BYTE,
 		BYTE);

@@ -3,8 +3,11 @@
 Keyboard* Keyboard::_instance = 0;
 
 Keyboard::Keyboard(BYTE* PRows,
-	BYTE* PCols)
+	BYTE* PCols,
+	void(*Event)(BYTE))
 {
+	_pKeyPressedEvent = Event;
+
 	for (int i = 0; i < ROWS; i++)
 	{
 		_pRows[i] = PRows[i];
@@ -87,9 +90,7 @@ void Keyboard::TimerEvent()
 					continue;
 				}
 
-				Serial.println(key);
-
-
+				_pKeyPressedEvent(key);
 
 				_lastKeyPressed = key;
 				

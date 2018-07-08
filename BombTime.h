@@ -9,12 +9,14 @@ class BombTime:
 {
 public:
 	BombTime();
-	BombTime(float);
-	BombTime(DWORD,float);
+	BombTime(DWORD);
+	BombTime(DWORD, DWORD);
 
 	void AddMiliSeconds(DWORD);
-	void IncreaseRate(float);
+
+	void Stop();
+	void IncreaseRate(DWORD);
 
 private:
-	float _increaseRate;
+	DWORD _increaseRate;
 };
