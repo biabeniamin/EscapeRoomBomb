@@ -12,6 +12,8 @@ public:
 	BombTime(DWORD);
 	BombTime(DWORD, DWORD);
 
+	void SetTime(DWORD);
+
 	void AddMiliSeconds(DWORD);
 
 	void Stop();

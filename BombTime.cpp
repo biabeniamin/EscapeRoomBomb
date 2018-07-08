@@ -13,8 +13,13 @@ BombTime::BombTime(DWORD Rate)
 
 BombTime::BombTime(DWORD Seconds, DWORD Rate)
 {
-	_miliSeconds = Seconds * 100;
+	SetTime(Seconds);
 	_increaseRate = Rate;
+}
+
+void BombTime::SetTime(DWORD Seconds)
+{
+	_miliSeconds = Seconds * 100;
 }
 
 void BombTime::AddMiliSeconds(DWORD MiliSeconds)
