@@ -31,7 +31,22 @@ BYTE Time::GetMiliSeconds()
 	return (_miliSeconds) % 100;
 }
 
+DWORD Time::GetTotalSeconds()
+{
+	return (_miliSeconds / (100ul));
+}
+
+DWORD Time::GetTotalMiliSeconds()
+{
+	return (_miliSeconds);
+}
+
 void Time::AddMiliSeconds(DWORD MiliSeconds)
 {
 	_miliSeconds += MiliSeconds;
+}
+
+void Time::SetTime(DWORD Seconds)
+{
+	_miliSeconds = Seconds * 100;
 }

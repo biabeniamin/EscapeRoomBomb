@@ -77,13 +77,17 @@ DWORD Timer::GetTotalTimerTicks()
 
 void Timer::Delay(DWORD miliSeconds)
 {
-	_timerTicks = 0;
-
-	DWORD start = _timerTicks;
+	DWORD startTime;
 	
+	startTime = GetUpTime()->GetTotalMiliSeconds();
 
-	while ((_timerTicks - start) < (miliSeconds >> 2))
+	while ((miliSeconds / 10) > (GetUpTime()->GetTotalMiliSeconds() - startTime))
 	{
+		/*Serial.print(GetUpTime()->GetTotalMiliSeconds());
+		Serial.print(" ");
+		Serial.print(GetUpTime()->GetTotalMiliSeconds() - startTime);
+		Serial.print(" ");
+		Serial.println(startTime);*/
 		//digitalWrite(5, digitalRead(5) ^ 1);
 		//Serial.print("-");
 		///Serial.print("asd:");

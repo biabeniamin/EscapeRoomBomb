@@ -16,7 +16,12 @@ public:
 	BYTE GetSeconds();
 	BYTE GetMiliSeconds();
 
+	DWORD GetTotalSeconds();
+	DWORD GetTotalMiliSeconds();
+
 	void AddMiliSeconds(DWORD);
+
+	void SetTime(DWORD);
 
 protected:
 	DWORD _miliSeconds;

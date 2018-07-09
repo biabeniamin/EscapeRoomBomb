@@ -3,6 +3,8 @@
 #include "Keyboard.h"
 #include "BombTime.h"
 
+#define ALARM_PIN 9
+
 char rows[] = {7, 2, 3, 5};
 char cols[] = {6, 8, 4};
 
@@ -25,17 +27,38 @@ BYTE setupMode = 1;
 
 void setup() {
   Serial.begin(9600);
-  bombTimer = BombTimer::GetInstance();
+  pinMode(ALARM_PIN, OUTPUT);
+  bombTimer = new BombTimer();
   bombTimer->SetTimer();
 
 
   keyboard.Start();
+  bombTimer->TurnOn();
 }
 
 void loop() {
   if (!setupMode)
   {
-    display.Write(bombTimer->GetBombTime());
+    ITime* bombTime;
+
+    bombTime = bombTimer->GetBombTime();
+    display.Write(bombTime);
+
+    if (0 == bombTime->GetTotalMiliSeconds())
+    {
+      display.Write(bombTime);
+
+      Serial.println("make high");
+      digitalWrite(ALARM_PIN, HIGH);
+      bombTimer->Delay(2000);
+      Serial.println("make LOW");
+      digitalWrite(ALARM_PIN, LOW);
+
+      //infinite loop
+      while (1);
+    }
+
+
   }
   //display.WriteInDecimal(1234567);
 
@@ -67,7 +90,7 @@ void SetupMode(DWORD Key)
     seconds += (initialTime[0]) * 60 * 60;
 
     bombTimer->GetBombTime()->SetTime(seconds);
-    bombTimer->TurnOn();
+    bombTimer->StartBombTimer();
     setupMode = 0;
   }
 
@@ -78,11 +101,11 @@ void KeyPressed(BYTE Key)
   Serial.println(Key);
   if (setupMode)
   {
-    if(11 == Key)
+    if (11 == Key)
     {
       Key = 0;
     }
-    
+
     SetupMode(Key);
     return;
   }
@@ -103,7 +126,7 @@ void KeyPressed(BYTE Key)
     if (isPinCorrect)
     {
       Serial.println("Done!");
-      bombTimer->GetBombTime()->Stop();
+      bombTimer->StopBombTimer();
     }
     else
     {
