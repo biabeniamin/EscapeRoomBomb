@@ -3,10 +3,10 @@
 #include "Keyboard.h"
 #include "BombTime.h"
 
-#define ALARM_PIN 9
+#define ALARM_PIN 5
 
-char rows[] = {7, 2, 3, 5};
-char cols[] = {6, 8, 4};
+char rows[] = {9, 13, 11, 10};
+char cols[] = {7, 8, 6};
 
 void KeyPressed(BYTE key);
 
@@ -14,7 +14,7 @@ Keyboard keyboard(rows,
                   cols,
                   &KeyPressed);
 
-Display display(12, 11, 10);
+Display display(A0, A2, A1);
 BombTimer *bombTimer;
 
 BYTE insertedKeys[4];
@@ -27,6 +27,7 @@ BYTE setupMode = 1;
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("start");
   pinMode(ALARM_PIN, OUTPUT);
   bombTimer = new BombTimer();
   bombTimer->SetTimer();
@@ -34,6 +35,9 @@ void setup() {
 
   keyboard.Start();
   bombTimer->TurnOn();
+
+  display.Write(0xFFFFFFFF);
+  
 }
 
 void loop() {
