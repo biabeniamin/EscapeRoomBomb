@@ -5,6 +5,8 @@
 
 #define ALARM_PIN 5
 
+#define PIN_ERASE_INTERVAL 1000
+
 char rows[] = {9, 13, 11, 10};
 char cols[] = {7, 8, 6};
 
@@ -25,10 +27,13 @@ BYTE initialTime[8];
 BYTE initialTimeCount = 0;
 BYTE setupMode = 1;
 
+DWORD lastKeyPress;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("start");
   pinMode(ALARM_PIN, OUTPUT);
+  digitalWrite(ALARM_PIN, HIGH);
   bombTimer = new BombTimer();
   bombTimer->SetTimer();
 
@@ -53,10 +58,10 @@ void loop() {
       display.Write(bombTime);
 
       Serial.println("make high");
-      digitalWrite(ALARM_PIN, HIGH);
+      digitalWrite(ALARM_PIN, LOW);
       bombTimer->Delay(2000);
       Serial.println("make LOW");
-      digitalWrite(ALARM_PIN, LOW);
+      digitalWrite(ALARM_PIN, HIGH);
 
       //infinite loop
       while (1);
@@ -102,6 +107,12 @@ void SetupMode(DWORD Key)
 
 void KeyPressed(BYTE Key)
 {
+  if(PIN_ERASE_INTERVAL < (bombTimer->GetUpTime()->GetTotalMiliSeconds() - lastKeyPress))
+  {
+    insertedKeysCount = 0;
+  }
+
+  lastKeyPress = bombTimer->GetUpTime()->GetTotalMiliSeconds();
   Serial.println(Key);
   if (setupMode)
   {
@@ -134,6 +145,7 @@ void KeyPressed(BYTE Key)
     }
     else
     {
+      Serial.println("Increase rate!");
       bombTimer->GetBombTime()->IncreaseRate(3);
     }
 
