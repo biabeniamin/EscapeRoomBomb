@@ -19,7 +19,16 @@ BombTime::BombTime(DWORD Seconds, DWORD Rate)
 
 void BombTime::AddMiliSeconds(DWORD MiliSeconds)
 {
-	_miliSeconds += MiliSeconds * _increaseRate;
+	if (_miliSeconds < 60000
+		&& ((int)_miliSeconds < (int)(MiliSeconds * _increaseRate)))
+	{
+		_miliSeconds = 0;
+	}
+	else
+	{
+		_miliSeconds += MiliSeconds * _increaseRate;
+	}
+
 }
 
 void BombTime::Stop()

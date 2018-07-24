@@ -40,6 +40,7 @@ void setup() {
 
   keyboard.Start();
   bombTimer->TurnOn();
+  bombTimer->StopBombTimer();
 
   display.Write(0xFFFFFFFF);
 
